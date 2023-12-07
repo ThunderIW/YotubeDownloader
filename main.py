@@ -24,7 +24,7 @@ def Download_thumbnailImage_set_info(sender,app_data):
     Video_title=YT.title
     Author=YT.author
     thumbnailImage=YT.thumbnail_url
-    urllib.request.urlretrieve(thumbnailImage,fr"D:\UBCO\COSC_301_labs\In_class_examples\GIS\thumbnail\t.png")
+    urllib.request.urlretrieve(thumbnailImage,fr"thumbnail\t.png")
 
     for res in YT.streams.filter(file_extension="mp4"):
         res_set.add(res.resolution)
@@ -39,12 +39,12 @@ def Download_thumbnailImage_set_info(sender,app_data):
 
 
 
-    image = Image.open(fr"D:\UBCO\COSC_301_labs\In_class_examples\GIS\thumbnail\t.png")
+    image = Image.open(fr"thumbnail\t.png")
     image.thumbnail((400,200))
-    image.save(fr"D:\UBCO\COSC_301_labs\In_class_examples\GIS\thumbnail\t.png")
+    image.save(fr"thumbnail\t.png")
 
 
-    width, height, channels, data = dpg.load_image(fr"D:\UBCO\COSC_301_labs\In_class_examples\GIS\thumbnail\t.png")
+    width, height, channels, data = dpg.load_image(fr"thumbnail\t.png")
 
     tag_Format=f"{Video_title}"
 
@@ -55,6 +55,7 @@ def Download_thumbnailImage_set_info(sender,app_data):
 
         dpg.configure_item("-VT-",texture_tag=tag_Format,show=True)
         dpg.configure_item("-RT-",show=True)
+        
 
 
 
