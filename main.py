@@ -77,26 +77,29 @@ def get_video(sender,app_data):
             tag=i.itag
 
     YT.streams.get_by_itag(tag).download(output_path="downloadedFile",filename="Video.mp4")
+    print("Downloading Video File")
     YT.streams.get_audio_only().download(filename="music.mp3",output_path="downloadedFile")
+    print("Downloading Music File")
 
 
 
-    video_path=r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\Video.mp4"
-    audio_path=r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\music.mp3"
+    video_path=r"downloadedFile\Video.mp4"
+    audio_path=r"downloadedFile\music.mp3"
 
     video_clip=VideoFileClip(video_path)
     audio_clip=AudioFileClip(audio_path)
 
     video_clip=video_clip.set_audio(audio_clip)
 
-    video_clip.write_videofile(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\outputVideo\f.mp4", codec='libx264',
+    video_clip.write_videofile(r"D:\UBCO\YotubeDownloader\Output\f.mp4", codec='libx264',
                                audio_codec='aac')
+    print("Finished Downloading Video and conveting")
 
     output_file=f"{YT.title}_{YT.author}"
 
-    os.rename(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\outputVideo\f.mp4",fr"D:\UBCO\COSC_301_labs\In_class_examples\GIS\outputVideo\{output_file}.mp4")
-    os.remove(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\music.mp3")
-    os.remove(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\video.mp4")
+    #os.rename(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\outputVideo\f.mp4",fr"D:\UBCO\COSC_301_labs\In_class_examples\GIS\outputVideo\{output_file}.mp4")
+    #os.remove(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\music.mp3")
+    #os.remove(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\video.mp4")
 
 
 
@@ -116,7 +119,7 @@ with dpg.window(label="Example Window",tag="T"):
 
     with dpg.menu_bar():
         with dpg.menu(label="File"):
-            dpg.add_menu_item(label="Settings")
+
             dpg.add_menu_item(label="Exit")
 
 
