@@ -7,6 +7,7 @@ from test import sort_reslution
 
 
 
+
 import os
 
 res_set=set()
@@ -15,7 +16,7 @@ res_set=set()
 def get_outputPath_2(sender,app_data):
     chosen_file_path=app_data["file_path_name"]
     dpg.set_value("-OutputLoc-",chosen_file_path)
-    dpg.configure_item("-OutputLoc-",width=590)
+    dpg.configure_item("-OutputLoc-",width=500)
 
 def get_outputPath(sender,app_data):
     dpg.configure_item("-Output_path-",show=True)
@@ -76,6 +77,7 @@ def get_video(sender,app_data):
     YT = YouTube(dpg.get_value("-Link-"))
     res_choice=dpg.get_value("-R-")
     print(res_choice)
+    Chosen_outPath=dpg.get_value("-OutputLoc-")
 
     for i in YT.streams.filter(file_extension="mp4",progressive=False,resolution=res_choice):
         print(i)
@@ -96,16 +98,20 @@ def get_video(sender,app_data):
     audio_clip=AudioFileClip(audio_path)
 
     video_clip=video_clip.set_audio(audio_clip)
+    try:
+        video_clip.write_videofile(rf"{Chosen_outPath}\f.mp4", codec='libx264',audio_codec='aac')
+        print("Finished Downloading Video and conveting")
 
-    video_clip.write_videofile(r"D:\UBCO\YotubeDownloader\Output\f.mp4", codec='libx264',
-                               audio_codec='aac')
-    print("Finished Downloading Video and conveting")
+        output_file=f"{YT.title}_{YT.author}"
 
-    output_file=f"{YT.title}_{YT.author}"
+        os.rename(fr"{Chosen_outPath}\f.mp4", fr"{Chosen_outPath}\{output_file}.mp4")
+        os.remove(r"downloadedFile\music.mp3")
+        os.remove(r"downloadedFile\video.mp4")
+    except FileNotFoundError:
+        os.remove(fr"{Chosen_outPath}\{output_file}.mp4")
 
-    #os.rename(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\outputVideo\f.mp4",fr"D:\UBCO\COSC_301_labs\In_class_examples\GIS\outputVideo\{output_file}.mp4")
-    #os.remove(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\music.mp3")
-    #os.remove(r"D:\UBCO\COSC_301_labs\In_class_examples\GIS\downloadedFile\video.mp4")
+
+
 
 
 
@@ -162,6 +168,7 @@ with dpg.window(label="Example Window",tag="T"):
 
             dpg.add_button(label="Download Video",callback=get_video)
             dpg.add_file_dialog(tag="-Output_path-",show=False,callback=get_outputPath_2,directory_selector=True)
+
 
 
 
