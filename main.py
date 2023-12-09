@@ -12,7 +12,13 @@ import os
 res_set=set()
 
 
+def get_outputPath_2(sender,app_data):
+    chosen_file_path=app_data["file_path_name"]
+    dpg.set_value("-OutputLoc-",chosen_file_path)
+    dpg.configure_item("-OutputLoc-",width=590)
 
+def get_outputPath(sender,app_data):
+    dpg.configure_item("-Output_path-",show=True)
 
 
 
@@ -126,8 +132,8 @@ with dpg.window(label="Example Window",tag="T"):
         with dpg.menu(label="Settings"):
             with dpg.group(horizontal=True):
                 dpg.add_text("Output video Location")
-                dpg.add_input_text(tag="-OuputLoc-")
-            dpg.add_button(label="SET")
+                dpg.add_input_text(tag="-OutputLoc-")
+            dpg.add_button(label="SET",callback=get_outputPath)
 
 
     with dpg.tab_bar():
@@ -155,6 +161,7 @@ with dpg.window(label="Example Window",tag="T"):
 
 
             dpg.add_button(label="Download Video",callback=get_video)
+            dpg.add_file_dialog(tag="-Output_path-",show=False,callback=get_outputPath_2,directory_selector=True)
 
 
 
